@@ -11,6 +11,7 @@ import user from "./models/user.js";
 config();
 
 const  app = express();
+app.use(cors());
 // const cors = require('cors');
 // app.use(cors({
 //     origin: "http://localhost:3000"
@@ -25,7 +26,7 @@ mongoose.connect(process.env.mongodb)
 app.use(express.json());
 app.use('/food', foodRoutes);
 
-app.use(cors());
+
 
 app.use('/auth',authRouter);
 
