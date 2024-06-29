@@ -44,18 +44,21 @@ router.get('/',async (request,response) => {
     }
 })
 
+//deleting specific food item
 router.delete('/:id', async(request,response)=>{
     try{
         const { id } =request.params;
         const result = await Food.findByIdAndDelete(id);
 
-    }catch(error){
-        console.log(error.message);
-        response.status(500).send({ message: error.message});
-
         if(!result){
             return response.status(404).json({message : 'Item not found'});
         }
+        
+        response.status(200).json({message:'Item Successfully deleted', deletedItem:result})
+
+    }catch(error){
+        console.log(error.message);
+        response.status(500).send({ message: error.message});
     }
 })
 
@@ -64,8 +67,7 @@ router.put('/:id', async (request,response)=>{
     try{
         if(
             !request.body.name ||
-            !request.body.priceInCents ||
-            !request.body.image
+            !request.body.priceInCents 
         ){
             return response.status(400).send({
                 message:'Required Fields are Missing'
