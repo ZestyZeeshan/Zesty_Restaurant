@@ -1,9 +1,10 @@
 import express from 'express';
 import {Food} from "../models/foodModels.js";
+import { auth } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', async (request,response)=>{
+router.post('/',auth, async (request,response)=>{
     try{
         if(
             !request.body.name ||
@@ -30,6 +31,8 @@ router.post('/', async (request,response)=>{
     }
 });
 
+//getting all food item
+
 router.get('/',async (request,response) => {
     try{
         const food= await Food.find({});
@@ -42,10 +45,10 @@ router.get('/',async (request,response) => {
         console.log(error.message);
         response.status(500).send({ message: error.message});
     }
-})
+});
 
 //deleting specific food item
-router.delete('/:id', async(request,response)=>{
+router.delete('/:id',auth, async(request,response)=>{
     try{
         const { id } =request.params;
         const result = await Food.findByIdAndDelete(id);
@@ -63,7 +66,7 @@ router.delete('/:id', async(request,response)=>{
 })
 
 //Updating A food item
-router.put('/:id', async (request,response)=>{
+router.put('/:id',auth, async (request,response)=>{
     try{
         if(
             !request.body.name ||

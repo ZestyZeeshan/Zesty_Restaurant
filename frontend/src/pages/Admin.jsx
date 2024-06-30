@@ -18,7 +18,7 @@ const Admin=()=>{
             console.log(error);
             setLoading(false);
         })
-    })
+    },[])
 
     return(
       
