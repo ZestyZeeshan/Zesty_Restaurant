@@ -41,7 +41,7 @@ const Register = () => {
                 }
             };
 
-            await axios.post('http://localhost:3000/auth/register',
+            const resp= await axios.post('http://localhost:3000/auth/register',
         {
             name: userData.name,
             email: userData.email,
@@ -49,7 +49,8 @@ const Register = () => {
         },
             config
         );
-
+         
+        console.log(resp);
         setIsSuccess(true);
         setErrorMessage('Registration succesfull');
         setTimeout(() => {
